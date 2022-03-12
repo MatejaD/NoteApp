@@ -18,26 +18,22 @@ function App() {
   })
   const [inputValue,setInputValue] = useState('')
   const [textareaValue,setTextareaValue] = useState('')
-  const [id, setId] = useState(() => {
-    const saved = localStorage.getItem('ID')
-    if (typeof saved !== undefined || null) {
-      const initalValue = JSON.parse(saved)
-      return initalValue
-    }
-    else {
-      return 0
-    }
-  })
+  let dataID = JSON.parse(localStorage.getItem(`ID`))
+
+  const [id, setId] = useState(dataID)
+   
 
 //  Storing notes in local storage
   let data = JSON.parse(localStorage.getItem(`${id}`))
-  let [info,] = useState(data)
+  let [info,setInfo] = useState(data)
   
 // Remove single note 
   const removeNote = (id2) => {
     const newNotes = notes.filter((note) => note[1] !== id2)
     setNotes(newNotes)
-    if(newNotes[1] !== id2){
+    console.log(newNotes)
+    if(newNotes !== id2){
+
       localStorage.removeItem(`${id2}`)
     }
   }
@@ -49,7 +45,7 @@ let [notes, setNotes] = useState(() => {
   else {
     return []
   }})
-  
+
 // Create a new note
   const handleSubmit = (e)=>{
     e.preventDefault()
@@ -65,6 +61,7 @@ let [notes, setNotes] = useState(() => {
 
     notes.push([newItem, id])
     localStorage.setItem(`${id}`, JSON.stringify(notes))
+    localStorage.setItem(`ID`, JSON.stringify(id))
 
     setInputValue('')
     setTextareaValue('')
@@ -75,9 +72,8 @@ let [notes, setNotes] = useState(() => {
   let day = new Date().getDay().toLocaleString()
   let year = new Date().getFullYear().toString()
 
-  useEffect(()=>{
-      localStorage.setItem('ID', JSON.stringify(id))
-  },[id])
+  // useEffect(()=>{
+  // },[id])
 
   useEffect(()=>{
     localStorage.setItem('mode', darkModeOn)
@@ -87,7 +83,13 @@ let [notes, setNotes] = useState(() => {
     <main style={{ backgroundColor:`${darkModeOn ? "#141411" :"#f8f6cf"}`}} className={`${modulOn ? 'background-dim modul-background' : ''}`}>
       {/* Dark/Light mode button */}
       {notes.length?
-       <button className='remove-all' onClick={()=> setNotes(null)}>Remove Notes</button>: null
+       <button className='remove-all' onClick={()=> {
+         localStorage.clear()
+          localStorage.setItem('mode', darkModeOn)
+
+         setNotes([])
+
+       }}>Remove Notes</button>: null
       }
       <button className={`${darkModeOn? 'dark-mode' : 'light-mode'}`} onClick={()=> setDarkModeOn(!darkModeOn)}>{darkModeOn?<BsMoonStars/>:<FiSun/>}</button>
       <form className={`${modulOn ? 'modul' : 'modul hide-modul'}`} onSubmit={handleSubmit}>
