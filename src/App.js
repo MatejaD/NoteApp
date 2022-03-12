@@ -25,7 +25,7 @@ function App() {
 
 //  Storing notes in local storage
   let data = JSON.parse(localStorage.getItem(`${id}`))
-  let [info,setInfo] = useState(data)
+  let [info] = useState(data)
   
 // Remove single note 
   const removeNote = (id2) => {
