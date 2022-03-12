@@ -315,6 +315,14 @@ button:hover{
  }
 }
 
+@media only screen and (max-width: 550px){
+
+  .section{
+    margin-top: 45px;
+  }
+}
+
+
 .remove-all{
   	box-shadow:inset 0px 1px 0px 0px rgb(179, 9, 9);
 	background:linear-gradient(to bottom, crimson 5%, rgb(179, 9, 9) 60%);
