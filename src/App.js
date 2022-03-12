@@ -82,15 +82,7 @@ let [notes, setNotes] = useState(() => {
   return (
     <main style={{ backgroundColor:`${darkModeOn ? "#141411" :"#f8f6cf"}`}} className={`${modulOn ? 'background-dim modul-background' : ''}`}>
       {/* Dark/Light mode button */}
-      {notes.length?
-       <button className='remove-all' onClick={()=> {
-         localStorage.clear()
-          localStorage.setItem('mode', darkModeOn)
-
-         setNotes([])
-
-       }}>Remove Notes</button>: null
-      }
+    
       <button className={`${darkModeOn? 'dark-mode' : 'light-mode'}`} onClick={()=> setDarkModeOn(!darkModeOn)}>{darkModeOn?<BsMoonStars/>:<FiSun/>}</button>
       <form className={`${modulOn ? 'modul' : 'modul hide-modul'}`} onSubmit={handleSubmit}>
         <div className="title">
@@ -105,6 +97,13 @@ let [notes, setNotes] = useState(() => {
       </form>
       <div>
         <button className='create-btn' onClick={()=> setModulOn(!modulOn)}>Create A New Note</button>
+        {notes.length ?
+          <button className='remove-all' onClick={() => {
+            localStorage.clear()
+            localStorage.setItem('mode', darkModeOn)
+            setNotes([])
+          }}>Remove Notes</button> : null
+        }
       </div>
       <section className='section'>
         {notes.map((note)=>{
